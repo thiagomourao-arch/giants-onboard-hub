@@ -4,35 +4,33 @@ import { events } from "@/data/events";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useMemo, useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Schedule() {
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  
   const [audience, setAudience] = useState<string>("Todos");
   const [category, setCategory] = useState<string>("Todas");
-  const [query, setQuery] = useState("");
+  
 
   const filtered = useMemo(() => {
     return events.filter((e) => {
-      const dOk = date ? format(new Date(e.datetime), "yyyy-MM-dd") === format(date, "yyyy-MM-dd") : true;
       const aOk = audience === "Todos" ? true : e.audience === audience;
       const cOk = category === "Todas" ? true : e.category === category;
-      const qOk = query ? e.title.toLowerCase().includes(query.toLowerCase()) : true;
-      return dOk && aOk && cOk && qOk;
+      return aOk && cOk;
     });
-  }, [date, audience, category, query]);
+  }, [audience, category]);
 
   return (
     <div className="space-y-6">
-      <SEO title="Giants OnBoard — Programação" description="Explore todas as atividades a bordo e filtre por data e categoria." />
+      <SEO title="Giants OnBoard — Programação" description="Explore atividades a bordo entre 8 e 12 de dezembro e filtre por público e categoria." />
       <h1 className="text-3xl font-semibold tracking-tight">Programação</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="lg:col-span-1 space-y-4">
-          <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+          
           <div className="space-y-2">
             <label className="text-sm">Público</label>
             <Select value={audience} onValueChange={setAudience}>
@@ -61,10 +59,6 @@ export default function Schedule() {
                 <SelectItem value="Gastronomia">Gastronomia</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm">Buscar</label>
-            <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Título da atividade" />
           </div>
         </aside>
 
