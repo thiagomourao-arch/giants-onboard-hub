@@ -52,6 +52,7 @@ export default function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => navigate("/perfil")}>Meu Perfil</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/reservas")}>Minhas Reservas</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/programacao")}>Programação</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/faq")}>FAQ</DropdownMenuItem>
@@ -83,6 +84,9 @@ export default function Navbar() {
             </NavLink>
             <NavLink to="/contato" className={navLinkCls} onClick={() => setOpen(false)}>
               Contato
+            </NavLink>
+            <NavLink to="/perfil" className={navLinkCls} onClick={() => setOpen(false)}>
+              Meu Perfil
             </NavLink>
             <Button variant="secondary" className="mt-2" onClick={logout}>Sair</Button>
           </div>

@@ -5,6 +5,7 @@ export type AuthUser = {
   id: string;
   email: string;
   name: string;
+  phone?: string;
   provider?: "password" | "google" | "microsoft";
 };
 
@@ -15,6 +16,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>;
   loginWithProvider: (provider: "google" | "microsoft") => Promise<void>;
   recoverPassword: (email: string) => Promise<void>;
+  updateProfile: (data: Partial<AuthUser>) => Promise<void>;
   logout: () => void;
 }
 
@@ -91,13 +93,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     toast({ title: "Enviado", description: "Se houver conta associada, enviaremos instruções." });
   };
 
+  const updateProfile = async (data: Partial<AuthUser>) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
+    if (!user) {
+      setLoading(false);
+      toast({ title: "Erro", description: "Usuário não encontrado.", variant: "destructive" });
+      throw new Error("No user");
+    }
+    const updatedUser = { ...user, ...data };
+    setUser(updatedUser);
+    persist(updatedUser);
+    setLoading(false);
+    toast({ title: "Perfil atualizado", description: "Suas informações foram salvas com sucesso." });
+  };
+
   const logout = () => {
     setUser(null);
     persist(null);
     toast({ title: "Sessão encerrada", description: "Volte em breve." });
   };
 
-  const value = useMemo(() => ({ user, loading, login, register, loginWithProvider, recoverPassword, logout }), [user, loading]);
+  const value = useMemo(() => ({ user, loading, login, register, loginWithProvider, recoverPassword, updateProfile, logout }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

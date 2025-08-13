@@ -18,6 +18,7 @@ import Schedule from "./pages/Schedule";
 import ActivityDetails from "./pages/ActivityDetails";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
               <Route path="/programacao/:id" element={<ActivityDetails />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/contato" element={<Contact />} />
+              <Route path="/perfil" element={<Profile />} />
             </Route>
 
             {/* Catch-all */}

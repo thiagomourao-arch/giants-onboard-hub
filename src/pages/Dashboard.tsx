@@ -7,8 +7,10 @@ import { events } from "@/data/events";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const totalCabins = reservations.reduce((s, r) => s + r.cabins, 0);
   const totalPassengers = reservations.reduce((s, r) => s + r.passengers, 0);
   const totalReservations = reservations.length;
@@ -18,7 +20,10 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <SEO title="Giants OnBoard — Dashboard" description="Acompanhe reservas e a programação do seu cruzeiro." />
-      <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">Bem-vindo, {user?.name}! Aqui você pode acompanhar suas reservas e a programação do cruzeiro.</p>
+      </div>
 
       <ReservationSummary totalCabins={totalCabins} totalPassengers={totalPassengers} totalReservations={totalReservations} />
 
