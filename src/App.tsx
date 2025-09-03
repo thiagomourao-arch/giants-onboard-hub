@@ -13,7 +13,7 @@ import AppLayout from "./components/layout/AppLayout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-import Reservations from "./pages/Reservations";
+import Dashboard from "./pages/Dashboard";
 import Schedule from "./pages/Schedule";
 import ActivityDetails from "./pages/ActivityDetails";
 import FAQ from "./pages/FAQ";
@@ -44,7 +44,7 @@ const App = () => (
                 </ProtectedRoute>
               }
             >
-              <Route path="/reservas" element={<Reservations />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/programacao" element={<Schedule />} />
               <Route path="/programacao/:id" element={<ActivityDetails />} />
               <Route path="/faq" element={<FAQ />} />

@@ -19,7 +19,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/reservas" className="flex items-center gap-2" aria-label="Giants OnBoard">
+          <Link to="/dashboard" className="flex items-center gap-2" aria-label="Giants OnBoard - Dashboard">
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-accent">
               <Ship className="h-5 w-5 text-accent-foreground" />
             </span>
@@ -28,8 +28,8 @@ export default function Navbar() {
         </div>
 
         <nav className="hidden md:flex items-center gap-1">
-          <NavLink to="/reservas" className={navLinkCls}>
-            Minhas Reservas
+          <NavLink to="/dashboard" className={navLinkCls} end>
+            Dashboard
           </NavLink>
           <NavLink to="/programacao" className={navLinkCls}>
             Programação
@@ -61,7 +61,6 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => navigate("/perfil")}>Meu Perfil</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/reservas")}>Minhas Reservas</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/programacao")}>Programação</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/faq")}>FAQ</DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/contato")}>Contato</DropdownMenuItem>
@@ -78,8 +77,8 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t bg-background">
           <div className="container py-2 flex flex-col">
-            <NavLink to="/reservas" className={navLinkCls} onClick={() => setOpen(false)}>
-              Minhas Reservas
+            <NavLink to="/dashboard" className={navLinkCls} onClick={() => setOpen(false)} end>
+              Dashboard
             </NavLink>
             <NavLink to="/programacao" className={navLinkCls} onClick={() => setOpen(false)}>
               Programação
