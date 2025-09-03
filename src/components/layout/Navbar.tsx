@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Ship, LogOut, Menu } from "lucide-react";
+import { Ship, LogOut, Menu, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/providers/AuthProvider";
@@ -9,6 +10,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   const navLinkCls = ({ isActive }: { isActive: boolean }) =>
     `px-3 py-2 rounded-md text-sm transition-colors ${isActive ? "bg-secondary text-sidebar-primary" : "hover:bg-accent"}`;
@@ -17,18 +19,15 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/dashboard" className="flex items-center gap-2" aria-label="Giants OnBoard - Dashboard">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md" style={{ background: "var(--gradient-gold)" }}>
-              <Ship className="h-5 w-5 text-foreground" />
+          <Link to="/reservas" className="flex items-center gap-2" aria-label="Giants OnBoard">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-accent">
+              <Ship className="h-5 w-5 text-accent-foreground" />
             </span>
             <span className="font-semibold tracking-tight">Giants OnBoard</span>
           </Link>
         </div>
 
         <nav className="hidden md:flex items-center gap-1">
-          <NavLink to="/dashboard" className={navLinkCls} end>
-            Dashboard
-          </NavLink>
           <NavLink to="/reservas" className={navLinkCls}>
             Minhas Reservas
           </NavLink>
@@ -44,6 +43,15 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label="Alternar modo escuro"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          </Button>
           <div className="hidden md:block text-sm text-muted-foreground">{user?.name}</div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -70,9 +78,6 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t bg-background">
           <div className="container py-2 flex flex-col">
-            <NavLink to="/dashboard" className={navLinkCls} onClick={() => setOpen(false)} end>
-              Dashboard
-            </NavLink>
             <NavLink to="/reservas" className={navLinkCls} onClick={() => setOpen(false)}>
               Minhas Reservas
             </NavLink>
